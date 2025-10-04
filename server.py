@@ -1,18 +1,21 @@
 from fastapi import FastAPI, Request, HTTPException
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 import torch
-import os
 
 # -----------------------------
 # Configuration
+# -----------------------------
 MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
 
+# -----------------------------
 # FastAPI App
+# -----------------------------
 app = FastAPI(title="HR Assistant LLM Server")
 
+# -----------------------------
 # Load Model
 # -----------------------------
-print("Loading Mistral-7B model...")
+print("Loading Mistral-7B model... (this may take a few minutes)")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
@@ -40,11 +43,6 @@ async def health():
 # -----------------------------
 @app.post("/generate_jd")
 async def generate_jd(request: Request):
-    # Verify webhook secret
-    secret = request.headers.get("X-WEBHOOK-SECRET")
-    if secret != WEBHOOK_SECRET:
-        raise HTTPException(status_code=403, detail="Unauthorized: Invalid webhook secret")
-
     # Get request JSON
     data = await request.json()
     role = data.get("role")
@@ -70,7 +68,9 @@ async def generate_jd(request: Request):
 
     return {"jd": jd_text}
 
-#uvicorn server:app --host '::' --port 8000 --reload   to start the server
 
+#uvicorn server:app --host '::' --port 8000 --reload  to start the server
 #pip install huggingface_hub
-#huggingface-cli login
+#huggingface-cli login  to authenticate the model
+
+
