@@ -5,7 +5,7 @@ import os
 
 # -----------------------------
 # Configuration
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0"
+MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
 
 # FastAPI App
 app = FastAPI(title="HR Assistant LLM Server")
@@ -13,7 +13,7 @@ app = FastAPI(title="HR Assistant LLM Server")
 # Load Model
 # -----------------------------
 print("Loading Mistral-7B model...")
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_auth_token=True)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
     device_map="auto",
