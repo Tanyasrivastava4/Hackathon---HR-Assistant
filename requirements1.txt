@@ -1,0 +1,10 @@
+streamlit
+pandas
+requests
+pydantic
+python-docx
+pdfminer.six
+#torch               # only required if you plan to run model locally; safe to keep
+#transformers        # used on Salad server; local can ignore but safe to have
+#accelerate
+#sentencepiece
